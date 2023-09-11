@@ -1,0 +1,19 @@
+
+.my-card{
+    box-shadow: var(--shadow);
+    margin: 1rem;
+    min-width: 350px;
+    border-radius: 0.5rem;
+    flex: 1;
+}
+.my-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 1rem auto
+}
+.my-card p{
+    margin: 0;
+}

@@ -5,9 +5,9 @@ import Button from "../Button";
 import { toast } from "react-toastify";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider
 } from "firebase/auth";
-import { auth, db } from "../../firebase";
+import { auth, db, provider } from "../../firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +18,7 @@ function SignupSign() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [loginForm, setLoginForm] = useState(false);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   //this function is for signing up with email
   function signupWithEmail() {
     // console.log(name+" "+email+" "+password+" "+confirmPassword)
@@ -43,8 +43,8 @@ function SignupSign() {
             setConfirmPassword("");
             setLoading(false);
             // create doc with user id as following id
-            createDoc(user);
-            navigate("/dashboard")
+            // createDoc(user);
+            navigate("/dashboard");
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -63,53 +63,80 @@ function SignupSign() {
     }
   }
   async function createDoc(user) {
-    if(!user) return;
+    if (!user) return;
 
-    const userRef= doc(db, "users", user.uid);
-    const userData= await getDoc(userRef);
-    if(!userData.exists()){
-      try{
+    const userRef = doc(db, "users", user.uid);
+    const userData = await getDoc(userRef);
+    if (!userData.exists()) {
+      try {
         await setDoc(doc(db, "users", user.uid), {
           name: user.displayName ? user.displayName : name,
           email: user.email,
-          photoUrl: user.photoUrl ? user.photoUrl:"",
-          createdAt: new Date()
+          photoUrl: user.photoURL ? user.photoURL : "",
+          createdAt: new Date(),
         });
-        toast.success("Doc Created!")
+        // toast.success("Doc Created!");
+      } catch (e) {
+        toast.error(e.message);
       }
-      catch(e){
-        toast.error(e.message)
-      }
+    } else {
+      toast.error("Doc Already Exists!");
     }
-    else{
-      toast.error("Doc Already Exists!")
-    }
-    
   }
   function loginUsingEmail() {
     // console.log(email+""+password)
     setLoading(true);
-    if (email !== "" && password !== ""){
+    if (email !== "" && password !== "") {
       signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        toast.success("User Logged In!")
-        setEmail("");
-        setPassword("");
-        // console.log(user)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          toast.success("User Logged In!");
+          setEmail("");
+          setPassword("");
+          // console.log(user)
+          setLoading(false);
+          navigate("/dashboard");
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          toast.error(errorMessage);
+          setLoading(false);
+        });
+    } else {
+      toast.error("All Fields are Mandatory!");
+      setLoading(false);
+    }
+  }
+  function googleAuth(){
+    setLoading(true);
+    try{
+      signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        toast.success("User Authenticated!");
         setLoading(false)
+        // console.log(user)
+        createDoc(user)
         navigate("/dashboard")
+        // IdP data available using getAdditionalUserInfo(result)
         // ...
-      })
-      .catch((error) => {
+      }).catch((error) => {
+        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        toast.error(errorMessage)
+        toast.error(errorMessage);
         setLoading(false)
+       
       });
-    }else{
-      toast.error("All Fields are Mandatory!")
+    }catch(e){
+      toast.error(e.message)
       setLoading(false)
     }
   }
@@ -141,7 +168,7 @@ function SignupSign() {
               onClick={loginUsingEmail}
             />
             <p style={{ textAlign: "center" }}>or</p>
-            <Button
+            <Button onClick={googleAuth}
               text={loading ? "Loading..." : "Login Using Google"}
               blue={true}
             />
@@ -194,7 +221,7 @@ function SignupSign() {
               onClick={signupWithEmail}
             />
             <p style={{ textAlign: "center" }}>or</p>
-            <Button
+            <Button onClick={googleAuth}
               text={loading ? "Loading..." : "Signup Using Google"}
               blue={true}
             />
