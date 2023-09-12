@@ -12,18 +12,20 @@
     align-items: center;
     justify-content: center;
     height: auto !important;
-    transition: all 0.3s;
+    
 }
 .btn:hover{
     background-color: var(--theme);
     color: var(--white);
+    transition: all 0.3s;
 }
 .btn-blue{
     background-color: var(--theme);
     color: var(--white);
-    transition: all 0.3s;
+    
 }
 .btn-blue:hover{
     background-color: var(--white);
     color: var(--theme);
+    transition: all 0.3s;
 }

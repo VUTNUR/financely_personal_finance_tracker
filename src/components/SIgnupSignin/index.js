@@ -43,7 +43,7 @@ function SignupSign() {
             setConfirmPassword("");
             setLoading(false);
             // create doc with user id as following id
-            // createDoc(user);
+            createDoc(user);
             navigate("/dashboard");
           })
           .catch((error) => {
