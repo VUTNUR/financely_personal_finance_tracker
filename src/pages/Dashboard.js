@@ -35,18 +35,20 @@ const Dashboard = () => {
   const handleIncomeCancel = () => {
     setIsIncomeModalVisible(false);
   };
-  const onFinish = (values, type) => {
-    //    console.log("onFinish", values, type)
+//   const onFinish = (values, type) => {
+//     //    console.log("onFinish", values, type)
+//     // console.log(values);
 
-    const newTransaction = {
-      type: type,
-      date: values.date.format("YYYY-MM-DD"),
-      amount: parseFloat(values.amount),
-      tag: values.tag,
-      name: values.name,
-    };
-    addTransaction(newTransaction);
-  };
+//     const newTransaction = {
+//       type: type,
+//       date: values.date.format("YYYY-MM-DD"),
+//       amount: parseFloat(values.amount),
+//       tag: values.tag==="custom"?values.customTag : values.tag,
+//       name: values.name,
+//     };
+//     addTransaction(newTransaction);
+    
+//   };
   async function addTransaction(transaction, many) {
     try {
       const docRef = await addDoc(
@@ -149,12 +151,14 @@ const Dashboard = () => {
           <AddExpenseModal
             isExpenseModalVisible={isExpenseModalVisible}
             handleExpenseCancel={handleExpenseCancel}
-            onFinish={onFinish}
+            // onFinish={onFinish}
+            addTransaction={addTransaction}
           />
           <AddIncomeModal
             isIncomeModalVisible={isIncomeModalVisible}
             handleIncomeCancel={handleIncomeCancel}
-            onFinish={onFinish}
+            // onFinish={onFinish}
+            addTransaction={addTransaction}
           />
           <TransactionsTable
             transactions={transactions}

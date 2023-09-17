@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   Button,
   Modal,
@@ -11,9 +11,31 @@ import {
 function AddIncomeModal({
   isIncomeModalVisible,
   handleIncomeCancel,
-  onFinish,
+  addTransaction
 }) {
   const [form] = Form.useForm();
+  const [showCustomInputIncome, setShowCustomInputIncome] = useState(false);
+  const onFinish = (values, type) => {
+    //    console.log("onFinish", values, type)
+    // console.log(values);
+
+    const newTransaction = {
+      type: type,
+      date: values.date.format("YYYY-MM-DD"),
+      amount: parseFloat(values.amount),
+      tag: values.tag==="custom"?values.customTag : values.tag,
+      name: values.name,
+    };
+    addTransaction(newTransaction);
+
+    setShowCustomInputIncome(false)
+    
+  };
+  
+
+  const toggleCustomInputIncome = () => {
+    setShowCustomInputIncome(!showCustomInputIncome);
+  };
   return (
     <Modal
       style={{ fontWeight: 600 }}
@@ -63,7 +85,7 @@ function AddIncomeModal({
         >
           <DatePicker format="YYYY-MM-DD" className="custom-input" />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           style={{ fontWeight: 600 }}
           label="Tag"
           name="tag"
@@ -74,9 +96,39 @@ function AddIncomeModal({
             <Select.Option value="freelance">Freelance</Select.Option>
             <Select.Option value="investment">Investment</Select.Option>
             {/* Add more tags here */}
+          {/* </Select> */}
+        {/* </Form.Item> */} 
+        <Form.Item label="Tag" name="tag" style={{ fontWeight: 600 }}>
+          <Select
+            className="select-input-2"
+            onChange={(value) => {
+              // If the selected value is "custom", show the custom input field
+              if (value === "custom") {
+                toggleCustomInputIncome();
+              } else {
+                setShowCustomInputIncome(false);
+              }
+            }}
+          >
+            <Select.Option value="salary">Salary</Select.Option>
+            <Select.Option value="freelance">Freelance</Select.Option>
+            <Select.Option value="investment">investment</Select.Option>
+            <Select.Option value="custom">Custom</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item>
+        {showCustomInputIncome && (
+          <Form.Item
+            label="Custom Tag"
+            name="customTag"
+            style={{ fontWeight: 600 }}
+            rules={[
+              { required: true, message: "Please enter a custom tag!" },
+            ]}
+          >
+            <Input type="text" className="custom-input"/>
+          </Form.Item>
+        )}
+        <Form.Item> 
           <Button className="btn btn-blue" type="primary" htmlType="submit">
             Add Income
           </Button>

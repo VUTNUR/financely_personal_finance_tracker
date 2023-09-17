@@ -46,8 +46,14 @@ function TransactionsTable({ transactions, addTransaction, fetchTransactions}) {
     if(sortKey=== "date"){
         return new Date(a.date)- new Date(b.date)
     }
+    else if(sortKey==="dateDes"){
+      return new Date(b.date)- new Date(a.date)
+    }
     else if(sortKey==="amount"){
         return a.amount - b.amount
+    }
+    else if(sortKey==="amountDes"){
+      return b.amount - a.amount
     }
     else{
         return 0;
@@ -149,8 +155,10 @@ function TransactionsTable({ transactions, addTransaction, fetchTransactions}) {
             value={sortKey}
           >
             <Radio.Button value="">No Sort</Radio.Button>
-            <Radio.Button value="date">Sort by Date</Radio.Button>
-            <Radio.Button value="amount">Sort by Amount</Radio.Button>
+            <Radio.Button value="date">Sort by Date (↑)</Radio.Button>
+            <Radio.Button value="dateDes">Sort by Date (↓)</Radio.Button>
+            <Radio.Button value="amount">Sort by Amount(↑)</Radio.Button>
+            <Radio.Button value="amountDes">Sort by Amount(↓)</Radio.Button>
           </Radio.Group>
           <div
             style={{
