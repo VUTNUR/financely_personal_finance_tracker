@@ -122,7 +122,7 @@ function SignupSign() {
         const user = result.user;
         toast.success("User Authenticated!");
         setLoading(false)
-        // console.log(user)
+        console.log(user)
         createDoc(user)
         navigate("/dashboard")
         // IdP data available using getAdditionalUserInfo(result)

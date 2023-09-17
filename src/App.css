@@ -5,3 +5,22 @@
   width: 100vw;
   height: 90vh;
 }
+.charts-wrapper{
+  display: flex;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  gap: 1rem;
+  height: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.line-chart{
+ box-shadow: var(--shadow);
+ padding: 2rem;
+}
+.pie-chart{
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
