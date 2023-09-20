@@ -19,21 +19,24 @@ input {
   font-family: 'Montserrat', sans-serif;
 }
 
-.custom-input{
+.custom-input {
   border: 0px;
-  border-bottom:1px solid #000;
+  border-bottom: 1px solid #000;
   padding: 0.5rem 0rem;
   width: 100%;
   border-radius: 0;
-  
+
 }
-.custom-input{
+
+.custom-input {
   margin-top: -1 !important;
 }
-.custom-input::placeholder{
+
+.custom-input::placeholder {
   color: rgba(0, 0, 0, 0.5rem);
 }
-.custom-input:focus{
+
+.custom-input:focus {
   outline: none;
   opacity: 1;
   transition: all 0.3s;
@@ -72,6 +75,6 @@ input {
 
 
 
-.select-input > div {
+.select-input>div {
   border: 0px solid #fff !important;
 }

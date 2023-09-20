@@ -1,11 +1,12 @@
-.wrapper{
+.wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 90vh;
 }
-.charts-wrapper{
+
+.charts-wrapper {
   display: flex;
   border-radius: 0.5rem;
   box-shadow: var(--shadow);
@@ -16,11 +17,147 @@
   justify-content: space-between;
 }
 
-.line-chart{
- box-shadow: var(--shadow);
- padding: 2rem;
-}
-.pie-chart{
+.line-chart {
   box-shadow: var(--shadow);
   padding: 2rem;
+}
+
+.pie-chart {
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
+
+/* Large Screens and desktop */
+@media screen and (min-width: 1025px) and (max-width: 1200px) {
+  .my-card {
+    min-width: 275px !important;
+  }
+
+  .line-chart {
+    width: 500px;
+  }
+
+  .pie-chart {
+    width: 325px;
+  }
+
+  .table-div {
+    padding: 0rem 1rem !important;
+  }
+
+  .my-table {
+    margin-right: 0.1rem;
+  }
+
+  .table-h2 {
+    font-size: 1em !important;
+  }
+
+  .exp-btn-csv {
+    font-size: 0.7rem !important;
+    width: 89px !important;
+  }
+
+  .imp-btn-csv {
+    font-size: 0.7rem !important;
+    width: 95px !important;
+  }
+
+  .csv-div {
+    width: 265px !important;
+  }
+
+  .select-input {
+    margin-right: 27px !important;
+
+  }
+}
+
+/* Laptops and small screens */
+
+@media screen and (min-width:769px) and (max-width:1024px) {
+  .my-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .charts-wrapper {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .csv-div {
+    width: 295px !important;
+    flex-direction: column !important;
+  }
+
+  .exp-btn-csv {
+    width: 8rem !important;
+    margin-bottom: 0rem !important;
+  }
+
+  .imp-btn-csv {
+    width: 7rem !important;
+  }
+
+  .input-radio {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    padding: 0rem 2rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .table-h2 {
+    font-size: 1em !important;
+  }
+
+  .rd-btn {
+    border-radius: initial !important;
+  }
+}
+
+/* ipads and tablets */
+
+@media screen and (min-width:481px) and (max-width:768px) {
+  .charts-wrapper {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .table-h2 {
+    font-size: 1em !important;
+  }
+
+  .csv-div {
+    width: 295px !important;
+    flex-direction: column !important;
+  }
+
+  .exp-btn-csv {
+    width: 5rem !important;
+    margin-bottom: 0rem !important;
+  }
+
+  .imp-btn-csv {
+    width: 4rem !important;
+  }
+
+  .input-radio {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    padding: 0rem 1rem !important;
+    gap: 0.3rem;
+  }
+
+  .table-h2 {
+    font-size: 1em !important;
+  }
+
+  .rd-btn {
+    border-radius: initial !important;
+  }
+
+  .rd-amount {
+    width: 129px;
+  }
 }

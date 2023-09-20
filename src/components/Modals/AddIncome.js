@@ -1,17 +1,10 @@
-import React,{useState} from "react";
-import {
-  Button,
-  Modal,
-  Form,
-  Input,
-  DatePicker,
-  Select,
-} from "antd";
+import React, { useState } from "react";
+import { Button, Modal, Form, Input, DatePicker, Select } from "antd";
 
 function AddIncomeModal({
   isIncomeModalVisible,
   handleIncomeCancel,
-  addTransaction
+  addTransaction,
 }) {
   const [form] = Form.useForm();
   const [showCustomInputIncome, setShowCustomInputIncome] = useState(false);
@@ -23,15 +16,13 @@ function AddIncomeModal({
       type: type,
       date: values.date.format("YYYY-MM-DD"),
       amount: parseFloat(values.amount),
-      tag: values.tag==="custom"?values.customTag : values.tag,
+      tag: values.tag === "custom" ? values.customTag : values.tag,
       name: values.name,
     };
     addTransaction(newTransaction);
 
-    setShowCustomInputIncome(false)
-    
+    setShowCustomInputIncome(false);
   };
-  
 
   const toggleCustomInputIncome = () => {
     setShowCustomInputIncome(!showCustomInputIncome);
@@ -96,8 +87,8 @@ function AddIncomeModal({
             <Select.Option value="freelance">Freelance</Select.Option>
             <Select.Option value="investment">Investment</Select.Option>
             {/* Add more tags here */}
-          {/* </Select> */}
-        {/* </Form.Item> */} 
+        {/* </Select> */}
+        {/* </Form.Item> */}
         <Form.Item label="Tag" name="tag" style={{ fontWeight: 600 }}>
           <Select
             className="select-input-2"
@@ -121,14 +112,12 @@ function AddIncomeModal({
             label="Custom Tag"
             name="customTag"
             style={{ fontWeight: 600 }}
-            rules={[
-              { required: true, message: "Please enter a custom tag!" },
-            ]}
+            rules={[{ required: true, message: "Please enter a custom tag!" }]}
           >
-            <Input type="text" className="custom-input"/>
+            <Input type="text" className="custom-input" />
           </Form.Item>
         )}
-        <Form.Item> 
+        <Form.Item>
           <Button className="btn btn-blue" type="primary" htmlType="submit">
             Add Income
           </Button>

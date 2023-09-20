@@ -1,16 +1,9 @@
-import React,{useState } from "react";
-import {
-  Button,
-  Modal,
-  Form,
-  Input,
-  DatePicker,
-  Select,
-} from "antd";
+import React, { useState } from "react";
+import { Button, Modal, Form, Input, DatePicker, Select } from "antd";
 function AddExpenseModal({
   isExpenseModalVisible,
   handleExpenseCancel,
-  addTransaction
+  addTransaction,
 }) {
   const [form] = Form.useForm();
   const [showCustomInput, setShowCustomInput] = useState(false);
@@ -23,14 +16,12 @@ function AddExpenseModal({
       type: type,
       date: values.date.format("YYYY-MM-DD"),
       amount: parseFloat(values.amount),
-      tag: values.tag==="custom"?values.customTag : values.tag,
+      tag: values.tag === "custom" ? values.customTag : values.tag,
       name: values.name,
     };
     addTransaction(newTransaction);
-    setShowCustomInput(false)
-    
+    setShowCustomInput(false);
   };
-  
 
   const toggleCustomInput = () => {
     setShowCustomInput(!showCustomInput);
@@ -95,8 +86,8 @@ function AddExpenseModal({
             <Select.Option value="education">Education</Select.Option>
             <Select.Option value="office">Office</Select.Option>
             {/* Add more tags here */}
-          {/* </Select> */}
-        {/* </Form.Item> */} 
+        {/* </Select> */}
+        {/* </Form.Item> */}
         <Form.Item label="Tag" name="tag" style={{ fontWeight: 600 }}>
           <Select
             className="select-input-2"
@@ -115,17 +106,15 @@ function AddExpenseModal({
             <Select.Option value="custom">Custom</Select.Option>
           </Select>
         </Form.Item>
-          {/* Custom input for the "Tag" field */}
-          {showCustomInput && (
+        {/* Custom input for the "Tag" field */}
+        {showCustomInput && (
           <Form.Item
             label="Custom Tag"
             name="customTag"
             style={{ fontWeight: 600 }}
-            rules={[
-              { required: true, message: "Please enter a custom tag!" },
-            ]}
+            rules={[{ required: true, message: "Please enter a custom tag!" }]}
           >
-            <Input type="text" className="custom-input"/>
+            <Input type="text" className="custom-input" />
           </Form.Item>
         )}
         <Form.Item>

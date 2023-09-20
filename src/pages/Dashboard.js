@@ -35,20 +35,7 @@ const Dashboard = () => {
   const handleIncomeCancel = () => {
     setIsIncomeModalVisible(false);
   };
-//   const onFinish = (values, type) => {
-//     //    console.log("onFinish", values, type)
-//     // console.log(values);
 
-//     const newTransaction = {
-//       type: type,
-//       date: values.date.format("YYYY-MM-DD"),
-//       amount: parseFloat(values.amount),
-//       tag: values.tag==="custom"?values.customTag : values.tag,
-//       name: values.name,
-//     };
-//     addTransaction(newTransaction);
-    
-//   };
   async function addTransaction(transaction, many) {
     try {
       const docRef = await addDoc(
@@ -67,30 +54,6 @@ const Dashboard = () => {
     }
   }
 
-  // const fetchTransactions=
-  //      useCallback(async()=>{
-  //      setLoading(true)
-  //      if(user){
-  //         const q= query(collection(db, `users/${user.uid}/transactions`));
-  //         const querySnapshot= await getDocs(q);
-  //         let transactionsArray=[];
-  //         querySnapshot.forEach((doc)=>{
-  //             // doc.data() is never undefined for query doc snapshots
-  //             transactionsArray.push(doc.data());
-  //         })
-  //         setTransactions(transactionsArray);
-  //         console.log(transactionsArray);
-  //         toast.success("Transaction Fetched!");
-  //      }
-  //      setLoading(false)
-  // },[user]);
-
-  // useEffect(()=>{
-  //     //Get all docs from collection
-  //     if(user){
-  //         fetchTransactions();
-  //     }
-  //     },[user,fetchTransactions])
   useEffect(() => {
     fetchTransactions();
   }, [user]);
@@ -130,9 +93,9 @@ const Dashboard = () => {
     setTotalBalance(incomeTotal - expensesTotal);
   }
 
-  let sortedTransactions= transactions.sort((a, b)=>{
-       return new Date(a.date) - new Date(b.date)
-  })
+  let sortedTransactions = transactions.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
   return (
     <div>
       <Header />
@@ -147,7 +110,11 @@ const Dashboard = () => {
             showExpenseModal={showExpenseModal}
             showIncomeModal={showIncomeModal}
           />
-          {transactions.length !==0 ? <ChartComponent sortedTransactions={sortedTransactions}/> : <NoTransactions />}
+          {transactions.length !== 0 ? (
+            <ChartComponent sortedTransactions={sortedTransactions} />
+          ) : (
+            <NoTransactions />
+          )}
           <AddExpenseModal
             isExpenseModalVisible={isExpenseModalVisible}
             handleExpenseCancel={handleExpenseCancel}

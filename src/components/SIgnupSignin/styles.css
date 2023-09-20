@@ -1,4 +1,4 @@
-.signup-wrapper{
+.signup-wrapper {
     width: 70%;
     max-width: 450px;
     height: auto;
@@ -7,12 +7,12 @@
     padding: 1rem 1.5rem;
 }
 
-.title{
+.title {
     font-weight: 500;
     font-size: 1.2rem;
     text-align: center;
 }
 
-.p-login{
+.p-login {
     cursor: pointer;
 }

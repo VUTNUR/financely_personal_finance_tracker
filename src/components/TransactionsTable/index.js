@@ -9,6 +9,7 @@ function TransactionsTable({ transactions, addTransaction, fetchTransactions}) {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter]= useState("");
   const[sortKey, setSortKey]=useState("");
+  const [sortDirection, setSortDirection] = useState("asc"); // Add this state
 
   const columns = [
     {
@@ -42,23 +43,47 @@ function TransactionsTable({ transactions, addTransaction, fetchTransactions}) {
     item.name.toLowerCase().includes(search.toLowerCase()) && item.type.includes(typeFilter)
   );
 
-  let sortedTransactions= [...filteredTransactions].sort((a,b)=>{
-    if(sortKey=== "date"){
-        return new Date(a.date)- new Date(b.date)
+  // let sortedTransactions= [...filteredTransactions].sort((a,b)=>{
+  //   if(sortKey=== "date"){
+  //       return new Date(a.date)- new Date(b.date)
+  //   }
+  //   else if(sortKey==="dateDes"){
+  //     return new Date(b.date)- new Date(a.date)
+  //   }
+  //   else if(sortKey==="amount"){
+  //       return a.amount - b.amount
+  //   }
+  //   else if(sortKey==="amountDes"){
+  //     return b.amount - a.amount
+  //   }
+  //   else{
+  //       return 0;
+  //   }
+  // })
+  let sortedTransactions = [...filteredTransactions].sort((a, b) => {
+    if (sortKey === "date") {
+      // Check the sort direction and adjust the comparison accordingly
+      if (sortDirection === "asc") {
+        return new Date(a.date) - new Date(b.date);
+      } else {
+        return new Date(b.date) - new Date(a.date);
+      }
+    } else if (sortKey === "amount") {
+      // Check the sort direction and adjust the comparison accordingly
+      if (sortDirection === "asc") {
+        return a.amount - b.amount;
+      } else {
+        return b.amount - a.amount;
+      }
+    } else {
+      return 0;
     }
-    else if(sortKey==="dateDes"){
-      return new Date(b.date)- new Date(a.date)
-    }
-    else if(sortKey==="amount"){
-        return a.amount - b.amount
-    }
-    else if(sortKey==="amountDes"){
-      return b.amount - a.amount
-    }
-    else{
-        return 0;
-    }
-  })
+  });
+
+  // Toggle the sort direction when the sort key is changed
+  const toggleSortDirection = () => {
+    setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+  };
    
   function exportCSV(){
     const csv = unparse( {
@@ -102,7 +127,7 @@ function TransactionsTable({ transactions, addTransaction, fetchTransactions}) {
   }
 
   return (
-    <div
+    <div className="table-div"
     style={{
       width: "100%",
       padding: "0rem 2rem",
@@ -115,6 +140,7 @@ function TransactionsTable({ transactions, addTransaction, fetchTransactions}) {
         gap: "1rem",
         alignItems: "center",
         marginBottom: "1rem",
+        marginTop:"0.5rem"
       }}
     >
     <div className="input-flex">
@@ -147,9 +173,9 @@ function TransactionsTable({ transactions, addTransaction, fetchTransactions}) {
             marginBottom: "1rem",
           }}
         >
-          <h2>My Transactions</h2>
+          <h2 className="table-h2">My Transactions</h2>
 
-          <Radio.Group
+          {/* <Radio.Group
             className="input-radio"
             onChange={(e) => setSortKey(e.target.value)}
             value={sortKey}
@@ -159,19 +185,40 @@ function TransactionsTable({ transactions, addTransaction, fetchTransactions}) {
             <Radio.Button value="dateDes">Sort by Date (↓)</Radio.Button>
             <Radio.Button value="amount">Sort by Amount(↑)</Radio.Button>
             <Radio.Button value="amountDes">Sort by Amount(↓)</Radio.Button>
+          </Radio.Group> */}
+           <Radio.Group
+            className="input-radio"
+            onChange={(e) => {
+              setSortKey(e.target.value);
+              toggleSortDirection(); // Toggle the sort direction when changing the sort key
+            }}
+            value={sortKey}
+          >
+            <Radio.Button value="" className="rd-btn">No Sort</Radio.Button>
+            <Radio.Button value="date" className="rd-btn">Sort by Date</Radio.Button>
+            <Radio.Button value="amount" className="rd-btn rd-amount">Sort by Amount</Radio.Button>
           </Radio.Group>
-          <div
+
+          <Radio.Group
+            className="input-radio"
+            onChange={() => toggleSortDirection()} // Toggle the sort direction directly
+            value={sortDirection === "asc" ? "asc" : "desc"}
+          >
+            <Radio.Button value="asc" className="rd-btn">Ascending</Radio.Button>
+            <Radio.Button value="desc" className="rd-btn">Descending</Radio.Button>
+          </Radio.Group>
+          <div className="csv-div"
             style={{
               display: "flex",
               justifyContent: "center",
               gap: "1rem",
-              width: "400px",
+              width: "350px",
             }}
           >
-            <button className="btn"  onClick={exportCSV} >
+            <button className="btn exp-btn-csv"  onClick={exportCSV} >
               Export to CSV
             </button>
-            <label for="file-csv" className="btn btn-blue">
+            <label for="file-csv" className="btn btn-blue imp-btn-csv">
               Import from CSV
             </label>
             <input
